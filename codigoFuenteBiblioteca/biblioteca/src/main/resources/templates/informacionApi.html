@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title>Política de privacidad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/list.css" >
+</head>
+<body >
+
+<header>
+    <h1>Mi Biblioteca</h1>
+    <p>Explora los libros disponibles</p>
+</header>
+
+<!-- Barra de navegación -->
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/books}">Libros</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/auth/register}">Registrarse</a>
+     
+</nav>
+
+<main class="container">
+
+    <!-- TITULO PRINCIPAL -->
+    <section>
+        <h1>📘 Proyecto Biblioteca — Documentación General</h1>
+        <p>
+            Esta aplicación es un sistema completo de gestión de biblioteca desarrollado siguiendo la
+            <strong>Arquitectura Hexagonal</strong> e implementado con Spring Boot, Thymeleaf, JPA,
+            JWT, Docker y MySQL.
+            Aquí se explica cómo está organizado el proyecto, las tecnologías utilizadas, la API REST,
+            su seguridad, y cómo interactúan todos los módulos.
+        </p>
+    </section>
+
+    <!-- SECCION DE TECNOLOGIAS -->
+    <section>
+        <h2>🧩 Tecnologías Utilizadas</h2>
+        <ul>
+            <li><strong>Spring Boot 3</strong> — Motor principal del backend.</li>
+            <li><strong>Spring Web</strong> — Controladores REST.</li>
+            <li><strong>Spring Security 6</strong> — Protección de rutas y autenticación.</li>
+            <li><strong>JJWT</strong> — Generación y validación de tokens JWT.</li>
+            <li><strong>Spring Data JPA</strong> — Acceso a base de datos y persistencia.</li>
+            <li><strong>MySQL 8</strong> — Base de datos relacional.</li>
+            <li><strong>Docker</strong> — Contenedor para MySQL.</li>
+            <li><strong>Thymeleaf</strong> — Vistas HTML para la web pública y privada.</li>
+            <li><strong>MapStruct</strong> — Conversión entre entidades, DTOs y modelos de dominio.</li>
+            <li><strong>SpringDoc / Swagger UI</strong> — Documentación interactiva de la API.</li>
+        </ul>
+    </section>
+
+    <!-- ARQUITECTURA -->
+    <section>
+        <h2>🏛 Arquitectura Hexagonal</h2>
+
+        <p>
+            El proyecto adopta la Arquitectura Hexagonal (Ports & Adapters).
+            Esto permite una separación clara entre:
+        </p>
+
+        <ul>
+            <li><strong>Dominio</strong>: reglas de negocio puras.</li>
+            <li><strong>Aplicación (Use Cases)</strong>: define qué se puede hacer.</li>
+            <li><strong>Infraestructura</strong>: controladores REST, JPA, seguridad, DTOs, mappers…</li>
+        </ul>
+
+        <h3>📁 Estructura real del proyecto</h3>
+        <pre>
+src/main/java/onion/whnazv/biblioteca/
+    ├── application
+    │     ├── port (in/out)
+    │     └── usecase (lógica de negocio)
+    ├── domain
+    │     ├── model (Book, User, Sale…)
+    │     └── exception
+    ├── infrastructure
+    │     ├── adapter
+    │     │     ├── in (REST y Web MVC)
+    │     │     └── out (Persistencia JPA)
+    │     ├── mapper (DTO y Entity)
+    │     └── security (JWT + filtros)
+    └── BibliotecaApplication.java
+        </pre>
+
+        <h3>🧠 Principio fundamental</h3>
+        <p>
+            El dominio NO depende de infraestructura.
+            Esto significa que la lógica de negocio puede sobrevivir incluso si cambias la base de datos,
+            los controladores REST o la interfaz web.
+        </p>
+    </section>
+
+    <!-- BASE DE DATOS Y DOCKER -->
+    <section>
+        <h2>🐬 Base de Datos y Docker</h2>
+
+        <h3>Docker Compose utilizado:</h3>
+        <pre>
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_proyecto
+    environment:
+      MYSQL_DATABASE: proyecto_11
+      MYSQL_USER: nombre_1
+      MYSQL_PASSWORD: contra_1
+      MYSQL_ROOT_PASSWORD: contra_1
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+        </pre>
+
+        <p>La aplicación se conecta mediante:</p>
+
+        <pre>
+spring.datasource.url=jdbc:mysql://localhost:3306/proyecto_11
+spring.datasource.username=nombre_1
+spring.datasource.password=contra_1
+        </pre>
+
+        <p>
+            El esquema se genera automáticamente gracias a:
+        </p>
+
+        <pre>spring.jpa.hibernate.ddl-auto=update</pre>
+    </section>
+
+    <!-- JWT -->
+    <section>
+        <h2>🔐 Seguridad y Autenticación (JWT)</h2>
+        <p>
+            La autenticación se realiza mediante JSON Web Tokens.
+            El flujo es el siguiente:
+        </p>
+
+        <ol>
+            <li>El usuario envía sus credenciales a <strong>/api/v1/public/auth/login</strong>.</li>
+            <li>Spring Security verifica email + contraseña.</li>
+            <li>Se genera un JWT firmado.</li>
+            <li>El usuario lo envía en cada petición privada:
+                <pre>Authorization: Bearer &lt;token&gt;</pre>
+            </li>
+            <li>Un filtro (JwtAuthenticationFilter) valida el token.</li>
+        </ol>
+
+        <h3>Ejemplo de login:</h3>
+        <pre>
+POST /api/v1/public/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "1234"
+}
+        </pre>
+
+        <h3>Respuesta (token JWT):</h3>
+        <pre>
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI..."
+}
+        </pre>
+    </section>
+
+    <!-- API REST -->
+    <section>
+        <h2>🌍 API REST</h2>
+        <p>
+            La API sigue el estilo REST y devuelve siempre respuestas JSON.
+            Se divide en endpoints públicos, de cliente y de administrador.
+        </p>
+
+        <!-- PUBLIC -->
+        <h3>🌐 Endpoints Públicos</h3>
+        <ul>
+            <li><strong>POST /api/v1/public/auth/login</strong> — Devuelve token JWT.</li>
+        </ul>
+
+        <!-- ADMIN -->
+        <h3>🛡 Endpoints Administrador (requieren ROLE_ADMIN)</h3>
+
+        <h4>📄 Ventas</h4>
+        <ul>
+            <li><strong>GET /api/v1/private/admin/sales</strong> — Lista todas las ventas.</li>
+            <li><strong>GET /api/v1/private/admin/sales/{id}</strong> — Detalles de una venta.</li>
+            <li><strong>POST /api/v1/private/admin/sales?userId=ID</strong> — Crea venta.</li>
+            <li><strong>PUT /api/v1/private/admin/sales/{id}?userId=ID</strong> — Actualiza venta.</li>
+            <li><strong>DELETE /api/v1/private/admin/sales/{id}</strong> — Elimina venta.</li>
+        </ul>
+
+        <h4>📚 Libros</h4>
+        <ul>
+            <li><strong>GET /api/books</strong></li>
+            <li><strong>GET /api/books/{id}</strong></li>
+            <li><strong>POST /api/books</strong></li>
+            <li><strong>PUT /api/books/{id}</strong></li>
+            <li><strong>DELETE /api/books/{id}</strong></li>
+        </ul>
+
+        <!-- CLIENT -->
+        <h3>👤 Endpoints Cliente (requieren ROLE_CLIENT)</h3>
+        <p>(Si implementados en tu proyecto)</p>
+        <ul>
+            <li><strong>GET /api/v1/private/client/sales</strong> — Ventas propias.</li>
+            <li><strong>GET /api/v1/private/client/sales/{id}</strong></li>
+        </ul>
+
+        <!-- JSON -->
+        <h3>📦 Ejemplo de respuesta JSON</h3>
+        <pre>
+{
+  "id": 1,
+  "title": "El Quijote",
+  "author": "Miguel de Cervantes",
+  "price": 19.99,
+  "stock": 12
+}
+        </pre>
+    </section>
+
+    <!-- SWAGGER -->
+    <section>
+        <h2>📑 Swagger UI</h2>
+        <p>Puedes explorar y probar la API de forma interactiva aquí:</p>
+
+        <p>
+            👉 <a href="http://localhost:8080/swagger-ui.html" target="_blank">
+            Abrir documentación Swagger
+        </a>
+        </p>
+    </section>
+
+    <!-- FLUJO COMPLETO -->
+    <section>
+        <h2>🔄 Flujo completo de una operación</h2>
+        <ol>
+            <li>El cliente envía una petición REST al controlador.</li>
+            <li>El controlador (adapter IN) convierte DTO → dominio.</li>
+            <li>El caso de uso ejecuta la lógica de negocio.</li>
+            <li>El puerto OUT llama al adapter de persistencia.</li>
+            <li>El adapter usa JPA para guardar en MySQL.</li>
+            <li>Se devuelve la respuesta en formato JSON.</li>
+        </ol>
+    </section>
+
+    <!-- NOTAS -->
+    <section>
+        <h2>📝 Notas finales</h2>
+        <p>
+            Esta documentación resume la estructura interna, API y funcionamiento del proyecto.
+            Su arquitectura modular permite escalar, añadir nuevas funcionalidades y
+            modificar la base de datos o la interfaz sin afectar al núcleo de negocio.
+        </p>
+    </section>
+
+</main>
+
+
+
+<footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+</body>
+</html>

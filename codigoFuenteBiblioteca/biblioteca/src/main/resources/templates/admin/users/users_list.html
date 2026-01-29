@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Biblioteca</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/list.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/list.css" >
+</head>
+<body>
+
+<header>
+    <h1>Panel de Administración</h1>
+    <p>Gestión de usuarios registrados</p>
+</header>
+
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/admin/books}">Gestión de libros</a>
+    <a th:href="@{/web/admin/sales}">Ventas</a>
+    <a th:href="@{/web/admin/users}">Usuarios</a>
+    <a th:href="@{/web/auth/logout}">Cerrar sesión</a>
+</nav>
+
+<main>
+    <h2>Usuarios registrados</h2>
+
+    <!-- 🔎 Buscador -->
+    <section>
+        <form th:action="@{/web/admin/users}" method="get">
+            <input type="text" name="query" placeholder="Buscar por nombre, email, rol...">
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Rol</th>
+            <th>Fecha de registro</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usuarios}">
+            <td th:text="${user.id}">id</td>
+            <td th:text="${user.username}">usuario</td>
+            <td th:text="${user.email}">email</td>
+            <td th:text="${user.firstName}">nombre</td>
+            <td th:text="${user.lastName}">apellidos</td>
+            <td th:text="${user.role}">rol</td>
+            <td th:text="${#dates.format(user.createdAt, 'dd/MM/yyyy')}">fecha</td>
+            <td th:text="${user.enabled ? 'Activo' : 'Inactivo'}">estado</td>
+            <td>
+                <a th:href="@{'/web/admin/users/edit/' + ${user.id}}">Editar</a>
+                <a th:href="@{'/web/admin/users/delete/' + ${user.id}}"
+                   onclick="return confirm('¿Seguro que quieres eliminar este usuario?');">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div style="margin-top: 2rem;">
+        <a th:href="@{/auth/perfil}">← Volver a mi perfil</a>
+        <a th:href="@{/web/admin/users/new}">Crear usuario</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/form.css" >
+
+</head>
+<body>
+
+<header>
+    <h1>Mi Biblioteca</h1>
+    <p>Explora los libros disponibles</p>
+</header>
+
+<!-- Barra de navegación -->
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/books}">Libros</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/auth/register}">Registrarse</a>
+     
+</nav>
+<div >
+    <h2>Registro de Usuario</h2>
+    <form th:action="@{/web/auth/register}" th:object="${register}" method="post">
+
+        <div>
+            <label for="username">Nombre de usuario:</label>
+            <input id="username" type="text" th:field="*{username}" required />
+        </div>
+
+        <div>
+            <label for="firstName">Nombre:</label>
+            <input id="firstName" type="text" th:field="*{firstName}" required />
+        </div>
+
+        <div>
+            <label for="lastName">Apellidos:</label>
+            <input id="lastName" type="text" th:field="*{lastName}" required />
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input id="email" type="email" th:field="*{email}" required />
+        </div>
+
+        <div>
+            <label for="password">Contraseña:</label>
+            <input id="password" type="password" th:field="*{password}" required />
+        </div>
+
+        <div>
+            <button type="submit">Registrarse</button>
+        </div>
+
+    </form>
+
+
+</div>
+<footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+</body>
+</html>

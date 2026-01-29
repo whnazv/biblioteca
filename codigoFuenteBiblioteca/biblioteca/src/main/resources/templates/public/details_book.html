@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title th:text="${book.title}">Detalles del Libro</title>
+
+    <!-- CSS global del layout -->
+
+
+    <!-- CSS específico de detalles -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/details.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/details.css" >
+</head>
+<body >
+
+<header>
+    <h1>Mi Biblioteca</h1>
+    <p>Explora los libros disponibles</p>
+</header>
+
+<!-- Barra de navegación -->
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/books}">Libros</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/auth/register}">Registrarse</a>
+     
+</nav>
+
+<!-- Contenido principal -->
+<main>
+    <h2 th:text="${book.title}">Título del libro</h2>
+    <img th:src="${book.imageUrl != null} ? @{${book.imageUrl}} : @{/images/default.jpg}" alt="Imagen del libro"/>
+    <p><strong>Autor:</strong> <span th:text="${book.author}">Autor</span></p>
+    <p><strong>Precio:</strong> <span th:text="${book.price}">0.00</span> €</p>
+    <p><strong>Stock:</strong> <span th:text="${book.stock}">0</span></p>
+    <p><strong>Descripción:</strong> <span th:text="${book.description}">Sin descripción</span></p>
+
+    <!-- Enlace de retorno -->
+    <a th:href="@{/}" >Volver al inicio</a>
+</main>
+
+<!-- Pie de página -->
+<footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>

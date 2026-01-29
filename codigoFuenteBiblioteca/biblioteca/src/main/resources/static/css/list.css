@@ -1,0 +1,88 @@
+/* ===== Estilos específicos para listas ===== */
+
+/* Contenedor de la lista */
+main > div {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Título */
+main h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+/* Botón principal (crear nueva venta) */
+main a[href*="sales/new"] {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+main a[href*="sales/new"]:hover {
+  background-color: #2980b9;
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+thead {
+  background-color: #2c3e50;
+  color: white;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+  background-color: #f0f8ff; /* efecto al pasar el ratón */
+}
+
+/* Acciones dentro de la tabla */
+td a {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Botón "Ver" */
+td a:first-child {
+  background-color: #27ae60;
+  color: white;
+}
+
+td a:first-child:hover {
+  background-color: #1e8449;
+}
+
+/* Botón "Eliminar" */
+td a:last-child {
+  background-color: #e74c3c;
+  color: white;
+}
+
+td a:last-child:hover {
+  background-color: #c0392b;
+}

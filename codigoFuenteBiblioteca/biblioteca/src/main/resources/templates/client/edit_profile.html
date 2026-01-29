@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title>Editar perfil</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/form.css" >
+
+</head>
+<body>
+<header>
+    <h1>Mi Biblioteca</h1>
+    <p>Explora los libros disponibles</p>
+</header>
+
+<!-- Barra de navegación -->
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/books}">Catálogo</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/auth/logout}">Cerrar sesión</a>
+</nav>
+
+<main>
+    <form th:action="@{/web/client/update}" method="post" >
+        <label>Nombre:</label>
+        <input type="text" th:value="${user.firstName}" name="firstName"/>
+
+        <label>Apellidos:</label>
+        <input type="text" th:value="${user.lastName}" name="lastName"/>
+
+        <label>Email:</label>
+        <input type="email" th:value="${user.email}" name="email"/>
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+</main>
+
+
+
+
+    <footer>
+        <a th:href="@{/web/client/perfil}">⬅ Volver al perfil</a>
+        <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+        <p>
+            <a th:href="@{/informacionWeb}">Información Web</a> |
+            <a th:href="@{/informacionApi}">Información API</a> |
+            <a href="https://github.com/whnazv">GitHub</a>
+        </p>
+    </footer>
+</body>
+</html>

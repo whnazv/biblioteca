@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title th:text="${pageTitle}">Mi Biblioteca</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/list.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/list.css" >
+
+
+</head>
+<body>
+
+<header>
+    <h1>Mi Biblioteca</h1>
+    <p>Explora los libros disponibles</p>
+</header>
+
+<!-- Barra de navegación -->
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/books}">Libros</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/auth/register}">Registrarse</a>
+     
+</nav>
+
+<main>
+    <section>
+        <h1>Información sobre la aplicación web</h1>
+        <p>
+            Esta plataforma ha sido desarrollada como un sistema integral de gestión de biblioteca que permite
+            a los usuarios explorar libros, consultar información detallada, registrarse, iniciar
+            sesión y navegar entre distintas secciones de forma intuitiva y segura.
+        </p>
+        <p>
+            El sistema combina una interfaz web amigable con un backend robusto, garantizando que tanto
+            usuarios como administradores puedan interactuar con los datos de manera eficiente. La aplicación
+            está diseñada siguiendo principios de arquitectura limpia, separando claramente las capas de
+            dominio, aplicación e infraestructura.
+        </p>
+    </section>
+
+    <section>
+        <h2>Objetivo del proyecto</h2>
+        <p>
+            El propósito principal es ofrecer una experiencia clara y funcional para la consulta y
+            gestión de libros, integrando una interfaz web dinámica con una API REST bien definida.
+            De esta forma, se facilita tanto la interacción de los usuarios como la administración
+            por parte del personal autorizado.
+        </p>
+        <p>
+            Además, se busca que el sistema sea fácilmente extensible: se pueden añadir nuevos módulos
+            (por ejemplo, gestión de préstamos o reseñas de libros) sin alterar la estructura existente.
+        </p>
+    </section>
+
+    <section>
+        <h2>Características principales</h2>
+        <ul>
+            <li>Visualización completa del catálogo de libros disponibles con imágenes, precios y descripciones.</li>
+            <li>Búsqueda avanzada por título, autor, género u otros criterios.</li>
+            <li>Acceso al detalle de cada libro con información ampliada.</li>
+            <li>Registro e inicio de sesión de usuarios con validación de datos.</li>
+            <li>Navegación clara mediante un menú superior y rutas bien definidas.</li>
+            <li>API REST documentada mediante Swagger para facilitar integraciones externas.</li>
+            <li>Gestión de ventas y compras con carrito de la compra integrado.</li>
+            <li>Panel de administración para gestionar usuarios, libros y ventas.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Funcionamiento de la aplicación web</h2>
+        <p>
+            La aplicación está construida sobre <strong>Spring Boot</strong> en el backend y utiliza
+            <strong>Thymeleaf</strong> como motor de plantillas para generar las vistas HTML. La estructura está
+            organizada para separar claramente las vistas públicas, las de usuario cliente y las vistas
+            exclusivas para administradores.
+        </p>
+        <p>
+            El flujo de datos sigue un patrón bien definido: los controladores reciben las peticiones HTTP,
+            invocan los casos de uso de la capa de aplicación, convierten los modelos de dominio a DTO mediante
+            mappers y finalmente envían los datos al <code>Model</code> para que Thymeleaf los renderice en la vista.
+        </p>
+
+        <h3>Estructura de vistas</h3>
+        <ul>
+            <li><strong>public/</strong>: contiene las páginas accesibles sin autenticación
+                (<code>login.html</code>, <code>register.html</code>, <code>allBook.html</code>,
+                <code>details_book.html</code>).
+            </li>
+
+            <li><strong>client/</strong>: vistas destinadas a usuarios con rol CLIENTE
+                (<code>perfil.html</code>, <code>details_sales.html</code>,
+                <code>edit_profile.html</code>, <code>edit_password.html</code>).
+            </li>
+
+            <li><strong>admin/</strong>: vistas exclusivas para administradores, organizadas por módulos:
+                <ul>
+                    <li><strong>book/</strong>: gestión de libros (<code>list.html</code>, <code>form.html</code>).</li>
+                    <li><strong>sale/</strong>: administración de ventas (<code>list.html</code>, <code>new.html</code>, <code>detail.html</code>).</li>
+                    <li><strong>users/</strong>: gestión de usuarios (<code>users_list.html</code>, <code>formusers.html</code>).</li>
+                    <li><code>perfil.html</code>: perfil del administrador.</li>
+                </ul>
+            </li>
+
+            <li><strong>Raíz</strong>: páginas generales como
+                <code>index.html</code>, <code>contacto.html</code>,
+                <code>informacionApi.html</code> e <code>informacionWeb.html</code>.
+            </li>
+        </ul>
+
+        <h3>Controladores y rutas principales</h3>
+        <p>
+            En el paquete <code>infrastructure.adapter.in.web</code> se ubican los controladores que enlazan
+            las rutas HTTP con las vistas:
+        </p>
+
+        <ul>
+            <li><strong>HomeController</strong>: gestiona las rutas principales (inicio, información, contacto).</li>
+            <li><strong>BookController</strong>: rutas públicas para ver libros y detalles.</li>
+            <li><strong>AdminBookController</strong>: módulo de administración de libros.</li>
+            <li><strong>AdminUserController</strong>: administración de usuarios.</li>
+            <li><strong>AdminSaleController</strong>: módulo de gestión de ventas.</li>
+            <li><strong>ClientSaleController</strong>: área de usuario cliente (perfil, compras, edición).</li>
+            <li><strong>AuthController</strong>: autenticación, registro y cambio de contraseña.</li>
+        </ul>
+
+        <h3>Cómo se conectan controladores y vistas</h3>
+        <ol>
+            <li>El usuario accede a una ruta (por ejemplo: <code>/web/admin/books</code>).</li>
+            <li>El controlador correspondiente procesa la petición y obtiene los datos desde los casos de uso.</li>
+            <li>Estos datos son convertidos a DTO mediante los mappers y enviados al <code>Model</code>.</li>
+            <li>Thymeleaf recibe los datos y renderiza la vista solicitada.</li>
+            <li>El usuario visualiza la información en la interfaz web y puede interactuar con ella.</li>
+        </ol>
+
+        <h3>Roles y seguridad</h3>
+        <p>La seguridad está gestionada mediante <strong>Spring Security</strong>, aplicando restricciones según rol:</p>
+        <ul>
+            <li>Rutas <code>/web/admin/**</code>: solo accesibles para usuarios con rol <strong>ADMIN</strong>.</li>
+            <li>Rutas <code>/web/client/**</code>: accesibles para roles <strong>CLIENTE</strong> y <strong>ADMIN</strong>.</li>
+            <li>Rutas públicas: accesibles sin autenticación
+                (<code>/web/books</code>, <code>/login</code>, <code>/register</code>, <code>/</code>).
+            </li>
+        </ul>
+        <p>
+            Además, se aplican medidas de seguridad adicionales como encriptación de contraseñas,
+            validación de formularios y protección contra ataques comunes (CSRF, XSS).
+        </p>
+
+        <h3>Resumen final</h3>
+        <p>
+            Esta aplicación integra Spring Boot, Thymeleaf y una API REST para ofrecer una plataforma
+            completa de gestión bibliotecaria. Los usuarios pueden registrarse, ver su perfil y revisar
+            sus compras; los administradores pueden gestionar libros, usuarios y ventas; y cualquier
+            visitante puede explorar el catálogo sin necesidad de autenticación.
+        </p>
+        <p>
+            Gracias a su arquitectura modular y a la separación de responsabilidades, el sistema es
+            mantenible, escalable y adaptable a nuevas necesidades. Esto garantiza que la biblioteca
+            pueda evolucionar con el tiempo sin comprometer la estabilidad de la aplicación.
+        </p>
+    </section>
+</main>
+
+
+
+    <footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+</body>
+</html>

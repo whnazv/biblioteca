@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title>Nueva Venta</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/list.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/list.css" >
+
+
+</head>
+<body>
+
+<header>
+    <h1>Nueva Venta</h1>
+    <p>Selecciona libros y añádelos al carrito</p>
+</header>
+
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/admin/books}">Gestión de libros</a>
+    <a th:href="@{/web/admin/sales}">Ventas</a>
+    <a th:href="@{/web/admin/users}">Usuarios</a>
+    <a th:href="@{/web/auth/logout}">Cerrar sesión</a>
+</nav>
+
+<main>
+    <h2>Libros disponibles</h2>
+
+    <!-- 🔎 Buscador -->
+    <section>
+        <form th:action="@{/web/admin/sales/new}" method="get">
+            <input type="text" name="query" placeholder="Buscar por título o autor...">
+            <button type="submit">Buscar</button>
+        </form>
+    </section>
+
+    <!-- Tabla de libros -->
+    <!-- Tabla de libros -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th> <!-- nueva columna -->
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}">ID</td> <!-- muestra el id -->
+            <td th:text="${book.title}">Título</td>
+            <td th:text="${book.author}">Autor</td>
+            <td th:text="${book.price}">0.00</td>
+            <td th:text="${book.stock}">0</td>
+            <td>
+                <!-- Añadir al carrito -->
+                <form th:action="@{/web/admin/sales/add}" method="post" style="display:inline;">
+                    <input type="hidden" name="bookId" th:value="${book.id}">
+                    <input type="number" name="quantity" min="1" value="1">
+                    <button type="submit">Añadir</button>
+                </form>
+
+                <!-- Quitar del carrito -->
+                <form th:action="@{/web/admin/sales/remove}" method="post" style="display:inline;">
+                    <input type="hidden" name="bookId" th:value="${book.id}">
+                    <button type="submit">Quitar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Carrito -->
+    <h2>Carrito</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cart.items}">
+            <td th:text="${item.title}">Título</td>
+            <td>
+                <form th:action="@{/web/admin/sales/update}" method="post">
+                    <input type="hidden" name="bookId" th:value="${item.bookId}">
+                    <input type="number" name="quantity" th:value="${item.quantity}" min="1">
+                    <button type="submit">Actualizar</button>
+                </form>
+            </td>
+            <td th:text="${item.total}">0.00</td>
+            <td>
+                <form th:action="@{/web/admin/sales/remove}" method="post">
+                    <input type="hidden" name="bookId" th:value="${item.bookId}">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p><strong>Total carrito:</strong> <span th:text="${cart.total}"></span> €</p>
+
+    <!-- Vaciar carrito -->
+    <form th:action="@{/web/admin/sales/clear}" method="post" th:if="${!#lists.isEmpty(cart.items)}">
+        <button type="submit">Vaciar carrito</button>
+    </form>
+
+    <!-- Checkout -->
+    <form th:action="@{/web/admin/sales/checkout}" method="post" th:if="${!#lists.isEmpty(cart.items)}">
+        <label>Usuario:</label>
+        <select name="userId" required>
+            <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}"></option>
+        </select>
+        <button type="submit">Confirmar Venta</button>
+    </form>
+</main>
+
+
+<footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>

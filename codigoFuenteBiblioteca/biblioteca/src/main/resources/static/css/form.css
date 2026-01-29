@@ -1,0 +1,70 @@
+/* ===== estilos genéricos para formularios ===== */
+
+/* Contenedor principal del formulario */
+form {
+  background-color: white;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Títulos dentro del formulario */
+form h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+/* Etiquetas */
+form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="number"],
+input[type="file"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Botones */
+button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #34495e;
+}
+
+/* Enlaces dentro del formulario */
+form a {
+  margin-left: 1rem;
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+form a:hover {
+  text-decoration: underline;
+}

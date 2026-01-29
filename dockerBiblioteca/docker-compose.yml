@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: biblioteca-db
+    environment:
+      MYSQL_DATABASE: proyecto_11
+      MYSQL_USER: nombre_1
+      MYSQL_PASSWORD: contra_1
+      MYSQL_ROOT_PASSWORD: contra_1
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - gestionnet
+
+  spring-app:
+    build: ./app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - gestionnet
+
+networks:
+  gestionnet:
+

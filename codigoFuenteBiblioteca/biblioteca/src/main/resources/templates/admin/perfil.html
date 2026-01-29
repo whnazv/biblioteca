@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<title>Mi Biblioteca</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:href="@{/fondo_registro.jpg}">
+
+    <title>Mi Perfil</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layaout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/perfil.css}">
+    <!-- Enlace al CSS para Spring Boot con Thymeleaf-->
+    <link rel="stylesheet" href="/src/main/resources/static/css/layaout.css" >
+    <link rel="stylesheet" href="/src/main/resources/static/css/perfil.css" >
+</head>
+<body >
+
+<header>
+    <h1>Panel de Administración</h1>
+    <p>Gestiona tu biblioteca</p>
+</header>
+
+<nav>
+    <a th:href="@{/}">Inicio</a>
+    <a th:href="@{/web/auth/perfil}">Perfil</a>
+    <a th:href="@{/web/admin/books}">Gestión de libros</a>
+    <a th:href="@{/web/admin/sales}">Ventas</a>
+    <a th:href="@{/web/admin/users}">Usuarios</a>
+    <a th:href="@{/web/auth/logout}">Cerrar sesión</a>
+</nav>
+
+<main>
+    <div >
+        <h2>Bienvenido, <span th:text="${user.username}">Usuario</span></h2>
+        <p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
+        <p><strong>Rol:</strong> <span th:text="${user.role}">ADMIN</span></p>
+
+        <!-- Libros comprados -->
+        <!--
+<div >
+    <h3>Libros comprados</h3>
+    <div th:if="${sales != null}">
+        <div th:each="sale : ${sales}">
+            <div th:each="item : ${sale.items}" >
+                <div >
+                    <img th:src="@{${item.book.imageUrl}}" alt="Imagen del libro"/>
+                    <div>
+                        <p><strong>Título:</strong> <span th:text="${item.book.title}">Título</span></p>
+                        <p><strong>Autor:</strong> <span th:text="${item.book.author}">Autor</span></p>
+                        <p><strong>Precio:</strong> <span th:text="${item.book.price}">0.00</span> €</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+
+
+        <!-- Libros disponibles -->
+        <div >
+            <h3>Libros disponibles</h3>
+            <div th:each="book : ${books}" >
+                <div >
+                    <img th:src="@{${book.imageUrl}}" alt="Imagen del libro"/>
+                    <div>
+                        <p><strong>Título:</strong> <span th:text="${book.title}">Título</span></p>
+                        <p><strong>Autor:</strong> <span th:text="${book.author}">Autor</span></p>
+                        <p><strong>Precio:</strong> <span th:text="${book.price}">0.00</span> €</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú de acciones del administrador -->
+        <section >
+            <h3>Acciones rápidas</h3>
+            <div >
+                <a th:href="@{/web/admin/books/new}" >
+                    <h4>➕ Añadir libro</h4>
+                    <p>Registrar un nuevo título</p>
+                </a>
+
+                <a th:href="@{/web/admin/books}" >
+                    <h4>📚 Editar libros</h4>
+                    <p>Gestionar catálogo existente</p>
+                </a>
+
+                <a th:href="@{/web/admin/sales}" >
+                    <h4>💰 Ver ventas</h4>
+                    <p>Consultar historial</p>
+                </a>
+
+                <a th:href="@{/web/admin/sales/new}" >
+                    <h4>📝 Crear venta</h4>
+                    <p>Registrar operación</p>
+                </a>
+
+                <a th:href="@{/web/admin/users}" >
+                    <h4>👥 Ver usuarios</h4>
+                    <p>Listado de clientes y admins</p>
+                </a>
+
+                <a th:href="@{/web/admin/users/new}" >
+                    <h4>➕ Crear usuario</h4>
+                    <p>Dar de alta nuevo usuario</p>
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Mi Biblioteca. Todos los derechos reservados.</p>
+    <p>
+        <a th:href="@{/informacionWeb}">Información Web</a> |
+        <a th:href="@{/informacionApi}">Información API</a> |
+        <a href="https://github.com/whnazv">GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>

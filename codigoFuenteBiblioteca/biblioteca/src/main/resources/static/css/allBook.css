@@ -1,0 +1,37 @@
+/* === GRID DE LIBROS === */
+main > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* === TARJETA DE LIBRO === */
+main > div > div {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+/* === IMAGEN DEL LIBRO === */
+main > div > div img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 6px 6px 0 0;
+}
+
+/* === TÍTULO === */
+main > div > div h3 {
+  margin: 1rem 0 0.5rem;
+  color: #2c3e50;
+}
+
+/* === TEXTOS === */
+main > div > div p {
+  margin: 0.5rem 0;
+  color: #333;
+}

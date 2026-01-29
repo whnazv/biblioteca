@@ -1,0 +1,54 @@
+/* Estilos SOLO para el main de detalles */
+main {
+  max-width: 800px;        /* ancho máximo del bloque */
+  margin: 2rem auto;       /* centrado horizontal */
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Título del libro */
+main h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+/* Imagen del libro */
+main img {
+  width: 250px;            /* tamaño fijo */
+  height: 350px;           /* altura fija */
+  object-fit: cover;       /* recorta manteniendo proporción */
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* Texto de detalles */
+main p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+main p strong {
+  color: #222;
+}
+
+/* Enlace de retorno */
+main a {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #2c3e50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+main a:hover {
+  background-color: #34495e;
+}

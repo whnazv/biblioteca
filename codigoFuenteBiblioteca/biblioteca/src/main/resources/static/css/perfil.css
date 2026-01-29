@@ -1,0 +1,64 @@
+/* ===== Perfil: estilos generales ===== */
+
+/* Contenido principal */
+main {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Títulos */
+main h2, main h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+/* Bloques dentro del perfil */
+main > div,
+main section {
+  background-color: #f0f0f0;   /* gris claro de fondo */
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* Menú de acciones rápidas */
+main section > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* todos iguales */
+  gap: 1.5rem;
+}
+
+/* Cada acción como tarjeta/botón */
+main section > div a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;   /* botón blanco */
+  color: #2c3e50;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  text-align: center;
+  min-height: 140px; /* altura uniforme */
+}
+
+main section > div a h4 {
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+main section > div a p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Hover bonito */
+main section > div a:hover {
+  background-color: #f9f9f9;
+  transform: translateY(-3px);
+}
